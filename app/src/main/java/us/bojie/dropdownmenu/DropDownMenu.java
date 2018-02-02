@@ -25,7 +25,7 @@ public class DropDownMenu extends LinearLayout {
     // Top
     private LinearLayout tabMenuView;
     // Container includes content, mask and pop menu
-    private FrameLayout containerFrameLayout;
+    private FrameLayout containerView;
     private View contentView;
     private View maskView;
     private FrameLayout popupMenuViews;
@@ -85,10 +85,10 @@ public class DropDownMenu extends LinearLayout {
         addView(underLineView, 1);
 
         // Container View
-        contentView = new FrameLayout(context);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        containerView = new FrameLayout(context);
+        containerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-        addView(contentView, 2);
+        addView(containerView, 2);
     }
 
     private int dp2Px(float value) {
@@ -105,9 +105,43 @@ public class DropDownMenu extends LinearLayout {
 
         }
 
+        // Setup top tabMenuView
         for (int i = 0; i < tabTexts.size(); i++) {
             addTab(tabTexts, i);
         }
+
+        // Add content view
+        containerView.addView(contentView, 0);
+
+        // MaskView
+        maskView = new View(getContext());
+        maskView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        maskView.setBackgroundColor(maskColor);
+        maskView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeMenu();
+            }
+        });
+        maskView.setVisibility(GONE);
+        containerView.addView(maskView, 1);
+
+        // Popup menu views
+        popupMenuViews = new FrameLayout(getContext());
+        popupMenuViews.setVisibility(GONE);
+        for (int i = 0; i < popupViews.size(); i++) {
+            popupViews.get(i).setLayoutParams(new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            popupMenuViews.addView(popupViews.get(i), i);
+        }
+        containerView.addView(popupMenuViews, 2);
+    }
+
+    private void closeMenu() {
+
     }
 
     private void addTab(List<String> tabTexts, int index) {
