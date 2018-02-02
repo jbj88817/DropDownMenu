@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,6 +41,9 @@ public class DropDownMenu extends LinearLayout {
     private int menuTextSize = 14;
     private int menuSelectedIcon;
     private int menuUnselectedIcon;
+
+    // Position that selected, -1 means unselected
+    private int currentTabPosition = -1;
 
     public DropDownMenu(Context context) {
         this(context, null);
@@ -175,7 +179,39 @@ public class DropDownMenu extends LinearLayout {
         }
     }
 
-    private void switchMenu(TextView tab) {
+    private void switchMenu(View targetView) {
+        for (int i = 0; i < tabMenuView.getChildCount(); i = i + 2) {
+            if (targetView == tabMenuView.getChildAt(i)) {
+                if (currentTabPosition == i) {
+                    closeMenu();
+                } else { // popup menu
+                    if (currentTabPosition == -1) {
+                        popupMenuViews.setVisibility(VISIBLE);
+                        popupMenuViews.setAnimation(
+                                AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_in));
+                        maskView.setVisibility(VISIBLE);
+                        maskView.setAnimation(AnimationUtils
+                                .loadAnimation(getContext(), R.anim.dd_mask_in));
+                        popupMenuViews.getChildAt(i / 2).setVisibility(VISIBLE);
+                    } else {
+                        popupMenuViews.getChildAt(i / 2).setVisibility(VISIBLE);
+                    }
 
+                    currentTabPosition = i;
+                    ((TextView) tabMenuView.getChildAt(i)).setTextColor(textSelectedColor);
+                    ((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(
+                            null, null,
+                            getResources().getDrawable(menuSelectedIcon),
+                            null);
+                }
+            } else {
+                ((TextView) tabMenuView.getChildAt(i)).setTextColor(textUnselectedColor);
+                ((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(
+                        null, null,
+                        getResources().getDrawable(menuUnselectedIcon),
+                        null);
+                popupMenuViews.getChildAt(i / 2).setVisibility(GONE);
+            }
+        }
     }
 }
