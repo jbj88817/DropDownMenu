@@ -145,7 +145,22 @@ public class DropDownMenu extends LinearLayout {
     }
 
     private void closeMenu() {
+        if (currentTabPosition != -1) {
+            ((TextView) tabMenuView.getChildAt(currentTabPosition)).setTextColor(textUnselectedColor);
+            ((TextView) tabMenuView.getChildAt(currentTabPosition)).setCompoundDrawablesWithIntrinsicBounds(
+                    null, null,
+                    getResources().getDrawable(menuUnselectedIcon),
+                    null);
 
+            popupMenuViews.setVisibility(GONE);
+            popupMenuViews.setAnimation(AnimationUtils
+                    .loadAnimation(getContext(), R.anim.dd_menu_out));
+
+            maskView.setVisibility(GONE);
+            maskView.setAnimation(AnimationUtils
+                    .loadAnimation(getContext(), R.anim.dd_mask_out));
+            currentTabPosition = -1;
+        }
     }
 
     private void addTab(List<String> tabTexts, int index) {
