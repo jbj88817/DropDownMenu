@@ -3,6 +3,7 @@ package us.bojie.dropdownmenu;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        
+        ListView lvCity = new ListView(this);
+        lvCity.setDividerHeight(0);
     }
 }

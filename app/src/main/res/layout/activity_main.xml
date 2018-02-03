@@ -13,6 +13,6 @@
     app:menuSelectedIcon="@mipmap/down"
     app:menuUnselectedIcon="@mipmap/up"
     app:maskColor="@color/mask_color"
-    app:menuBackgroundColor="@color/menu_background">
+    app:menuBackgroundColor="@color/white">
 
 </us.bojie.dropdownmenu.DropDownMenu>

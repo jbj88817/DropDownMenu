@@ -7,5 +7,5 @@
     <color name="unselected">0xff111111</color>
     <color name="selected">0xff890c85</color>
     <color name="mask_color">0x88888888</color>
-    <color name="menu_background">0xffffffff</color>
+    <color name="white">0xffffffff</color>
 </resources>
