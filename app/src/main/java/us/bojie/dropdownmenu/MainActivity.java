@@ -1,9 +1,13 @@
 package us.bojie.dropdownmenu;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -11,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     DropDownMenu mDropDownMenu;
     private String headers[] = {"city", "age", "sex", "sign"};
@@ -58,5 +62,33 @@ public class MainActivity extends AppCompatActivity {
         TextView okTextView = constellationView.findViewById(R.id.ok);
         mConstellationAdapter = new ConstellationAdapter(this, Arrays.asList(signs));
         gridView.setAdapter(mConstellationAdapter);
+
+        lvCity.setOnItemClickListener(this);
+        lvAge.setOnItemClickListener(this);
+        lvSex.setOnItemClickListener(this);
+        okTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        popViews.add(lvCity);
+        popViews.add(lvAge);
+        popViews.add(lvSex);
+        popViews.add(constellationView);
+
+        ImageView contentView = new ImageView(this);
+        contentView.setLayoutParams(new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        contentView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews, contentView);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

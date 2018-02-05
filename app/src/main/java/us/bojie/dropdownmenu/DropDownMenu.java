@@ -90,7 +90,7 @@ public class DropDownMenu extends LinearLayout {
 
         // Container View
         containerView = new FrameLayout(context);
-        containerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        containerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         addView(containerView, 2);
     }

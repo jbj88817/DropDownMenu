@@ -51,7 +51,7 @@ public class GirdDropDownAdapter extends BaseAdapter {
         if (convertView != null) {
             viewHolder = (ViewHolder) convertView.getTag();
         } else {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_list_drop_down, parent);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_list_drop_down, null);
             viewHolder = new ViewHolder();
             viewHolder.tv = convertView.findViewById(R.id.tv);
             convertView.setTag(viewHolder);
