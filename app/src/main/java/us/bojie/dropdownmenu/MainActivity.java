@@ -46,22 +46,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mCityAdapter = new GirdDropDownAdapter(this, Arrays.asList(citys));
         lvCity.setDividerHeight(0);
         lvCity.setAdapter(mCityAdapter);
+        lvCity.setId(0);
 
         ListView lvAge = new ListView(this);
         mAgeAdapter = new ListDropDownAdapter(this, Arrays.asList(ages));
         lvAge.setDividerHeight(0);
         lvAge.setAdapter(mAgeAdapter);
+        lvAge.setId(1);
 
         ListView lvSex = new ListView(this);
         mSexAdapter = new ListDropDownAdapter(this, Arrays.asList(sexs));
         lvSex.setDividerHeight(0);
         lvSex.setAdapter(mSexAdapter);
+        lvSex.setId(2);
 
         View constellationView = getLayoutInflater().inflate(R.layout.layout_constellation, null);
         GridView gridView = constellationView.findViewById(R.id.constellation);
         TextView okTextView = constellationView.findViewById(R.id.ok);
         mConstellationAdapter = new ConstellationAdapter(this, Arrays.asList(signs));
         gridView.setAdapter(mConstellationAdapter);
+        gridView.setId(3);
 
         lvCity.setOnItemClickListener(this);
         lvAge.setOnItemClickListener(this);
@@ -69,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         okTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mDropDownMenu.setImageResource(imgIds[3]);
+                mDropDownMenu.closeMenu();
             }
         });
 
@@ -89,6 +94,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()) {
+            case 0: // City
+                mCityAdapter.setCheckItemPosition(position);
+                mDropDownMenu.setImageResource(imgIds[0]);
+                mDropDownMenu.closeMenu();
+                break;
+            case 1: // Age
+                mAgeAdapter.setCheckItemPosition(position);
+                mDropDownMenu.setImageResource(imgIds[1]);
+                mDropDownMenu.closeMenu();
+                break;
+            case 2: // Sex
+                mSexAdapter.setCheckItemPosition(position);
+                mDropDownMenu.setImageResource(imgIds[2]);
+                mDropDownMenu.closeMenu();
+                break;
+            case 3:
+                mConstellationAdapter.setCheckItemPosition(position);
+                signPosition = position;
+                break;
+        }
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (mDropDownMenu.isShowing()) {
+            mDropDownMenu.closeMenu();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

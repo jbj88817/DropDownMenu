@@ -2,6 +2,7 @@ package us.bojie.dropdownmenu;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -144,7 +146,17 @@ public class DropDownMenu extends LinearLayout {
         containerView.addView(popupMenuViews, 2);
     }
 
-    private void closeMenu() {
+    public void setImageResource(@IdRes int imageResourceId) {
+        if (contentView instanceof ImageView) {
+            ((ImageView) contentView).setImageResource(imageResourceId);
+        }
+    }
+
+    public boolean isShowing() {
+        return currentTabPosition != -1;
+    }
+
+    public void closeMenu() {
         if (currentTabPosition != -1) {
             ((TextView) tabMenuView.getChildAt(currentTabPosition)).setTextColor(textUnselectedColor);
             ((TextView) tabMenuView.getChildAt(currentTabPosition)).setCompoundDrawablesWithIntrinsicBounds(
@@ -208,6 +220,7 @@ public class DropDownMenu extends LinearLayout {
                         maskView.setAnimation(AnimationUtils
                                 .loadAnimation(getContext(), R.anim.dd_mask_in));
                         popupMenuViews.getChildAt(i / 2).setVisibility(VISIBLE);
+
                     } else {
                         popupMenuViews.getChildAt(i / 2).setVisibility(VISIBLE);
                     }
