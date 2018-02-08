@@ -1,5 +1,6 @@
 package us.bojie.dropdownmenu;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         initViews();
     }
 
+    @SuppressLint("ResourceType")
     private void initViews() {
         ListView lvCity = new ListView(this);
         mCityAdapter = new GirdDropDownAdapter(this, Arrays.asList(citys));
